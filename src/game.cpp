@@ -236,7 +236,7 @@ void Game::handleCapture(const sf::Vector2f& dropPosition)
     {
         std::cout << "Piece captured!" << std::endl;
 
-        // Remove the captured piece from the vector
+        /// Remove the captured piece from the vector
         pieces.erase(capturedPiece);
         std::cout << "Piece deleted!" << std::endl;
 

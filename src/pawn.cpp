@@ -47,7 +47,13 @@ bool Pawn::isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& 
                deltaX == 0 && deltaY == 2 * static_cast<float>(direction) * static_cast<float>(board.getSquareSize()))
     {
         /// Mutare cu două celule înainte, doar din poziția inițială
-        return true;
+        float midX = initialPosition.x;
+        float midY = initialPosition.y + static_cast<float>(direction) * static_cast<float>(board.getSquareSize());
+        /*
+        if (board.isCellOccupied(midY / board.getSquareSize(), midX / board.getSquareSize())) {
+            return false;  // Returnează false dacă casuța intermediară este ocupată
+        }
+         */
     }
     else if (direction == 1 && initialPosition.y > static_cast<float>(board.getSquareSize()) &&
              initialPosition.y < 2 * static_cast<float>(board.getSquareSize()) &&
