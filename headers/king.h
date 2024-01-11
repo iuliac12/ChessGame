@@ -7,9 +7,11 @@
 #ifndef OOP_KING_H
 #define OOP_KING_H
 
+#include "piece.h"
+#include "board.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "piece.h"
+
 
 /**
  * @class King
@@ -48,6 +50,7 @@ public:
      * @return True dacă mutarea este validă, false altfel.
      */
     bool isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& newPosition, const Board& board) const override;
-};
+
+    };
 
 #endif //OOP_KING_H

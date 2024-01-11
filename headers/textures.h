@@ -55,6 +55,7 @@ public:
      * @return O referință la fluxul de ieșire.
      */
     friend std::ostream& operator<<(std::ostream& os, const Textures&);
+
 };
 
 

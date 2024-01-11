@@ -9,9 +9,11 @@
 #include "../headers/rook.h"
 #include "../headers/king.h"
 #include "../headers/exceptions.h"
+#include "../headers/PieceFactory.h"
 
 
 bool isPieceDragging = false;
+bool gameOver = false;
 
 Game::Game() : window(sf::VideoMode(596, 596), "Chess Game") {
     board = new Board(600, 600 / 8);
@@ -59,11 +61,20 @@ void Game::addPiecesToVector()
     float halfPieceWidth = pieceWidth / 2.0f;
     float halfPieceHeight = pieceHeight / 2.0f;
 
-    /**pieces.push_back(std::make_unique<Pawn>(Textures::whitePawn,
-                                            sf::Vector2f(0.0f * scale + squareSize / 2.0f - halfPieceWidth - 0.5f,
-                                            6.0f * scale + squareSize / 2.0f - halfPieceHeight - 0.5f),
-                                            pieceWidth, pieceHeight, white));
+
+     /** FOLOSIRE PieceFactory
+    pieces.push_back(PieceFactory<Pawn>::createPiece(Textures::whitePawn, sf::Vector2f(0 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 6 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Rook>::createPiece(Textures::whiteRook, sf::Vector2f(0 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Knight>::createPiece(Textures::whiteKnight, sf::Vector2f(1 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Bishop>::createPiece(Textures::whiteBishop, sf::Vector2f(2 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Queen>::createPiece(Textures::whiteQueen, sf::Vector2f(3 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<King>::createPiece(Textures::whiteKing, sf::Vector2f(4 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Bishop>::createPiece(Textures::whiteBishop, sf::Vector2f(5 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Knight>::createPiece(Textures::whiteKnight, sf::Vector2f(6 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
+    pieces.push_back(PieceFactory<Rook>::createPiece(Textures::whiteRook, sf::Vector2f(7 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 7 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
 */
+
+
     pieces.push_back(std::make_unique<Pawn>(Textures::whitePawn, sf::Vector2f(0 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 6 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
     pieces.push_back(std::make_unique<Pawn>(Textures::whitePawn, sf::Vector2f(1 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 6 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
     pieces.push_back(std::make_unique<Pawn>(Textures::whitePawn, sf::Vector2f(2 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 6 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, white));
@@ -101,6 +112,17 @@ void Game::addPiecesToVector()
     pieces.push_back(std::make_unique<Knight>(Textures::blackKnight, sf::Vector2f(6 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 0 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, black));
     pieces.push_back(std::make_unique<Rook>(Textures::blackRook, sf::Vector2f(7 * scale + squareSize / 2.0f - halfPieceWidth - 0.5, 0 * scale + squareSize / 2.0f - halfPieceHeight - 0.5), pieceWidth, pieceHeight, black));
 
+    /**
+     * FOLOSIRE PieceFactory
+     */
+    printPieceInfo(*pieces[0]);
+    printPieceInfo(*pieces[1]);
+    printPieceInfo(*pieces[2]);
+    printPieceInfo(*pieces[3]);
+    printPieceInfo(*pieces[4]);
+    printPieceInfo(*pieces[5]);
+    printPieceInfo(*pieces[6]);
+    printPieceInfo(*pieces[7]);
 
 }
 
@@ -112,58 +134,6 @@ bool Game::isMouseOverPiece(const Piece& piece, const sf::Vector2f& mousePositio
            piece.getPosition().y <= mousePosition.y && mousePosition.y <= piece.getPosition().y + pieceHeight;
 
 }
-
-/**
-bool Game::isMouseOverEmptySquare(const sf::Vector2f& mousePosition) const
-{
-    for (const auto& piecePtr : pieces)
-    {
-        if (isMouseOverPiece(*piecePtr, mousePosition)) {
-            return false;
-        }
-    }
-    return mousePosition.x >= 0 && mousePosition.x < board->getSquareSize() * 8 &&
-           mousePosition.y >= 0 && mousePosition.y < board->getSquareSize() * 8;
-
-}
-
-
-bool Game::isValidPieceMove(const Piece& piece, const sf::Vector2f& initialPos, const sf::Vector2f& finalPos) const
-{
-    // Verifică dacă mutarea piesei este validă în contextul jocului tău
-    // Poți adăuga aici orice reguli specifice jocului de șah
-    // În acest exemplu, vom lansa excepții în funcție de cazurile definite
-
-    if (!piece.isValidMove(initialPos, finalPos, *board)) {
-        throw InvalidMoveException();
-    }
-
-    // Verifică dacă există o piesă pe caseta de destinație
-    for (const auto& piecePtr : pieces) {
-        if (piecePtr->getPosition() == finalPos) {
-            // Caseta este ocupată
-            throw SquareOccupiedException();
-        }
-    }
-
-    // Verifică dacă există o piesă pe caseta de plecare
-    bool isPieceOnInitialSquare = false;
-    for (const auto& piecePtr : pieces) {
-        if (piecePtr->getPosition() == initialPos) {
-            isPieceOnInitialSquare = true;
-            break;
-        }
-    }
-
-    if (!isPieceOnInitialSquare) {
-        // Caseta de plecare nu conține o piesă
-        throw EmptySquareException();
-    }
-
-    // Dacă ajungem aici, mutarea este validă
-    return true;
-}
-*/
 
 void Game::handleEvents()
 {
@@ -245,6 +215,7 @@ void Game::handleCapture(const sf::Vector2f& dropPosition)
 
 void Game::handleMouseRelease()
 {
+    sf::Text checkMessage;
     /// Verificați dacă butonul stâng al mouse-ului a fost eliberat
     if (isPieceDragging && selectedPiece != nullptr)
     {
@@ -277,6 +248,26 @@ void Game::handleMouseRelease()
         selectedPiece = nullptr;
     }
 
+    for (const auto& piecePtr : pieces)
+    {
+        if (auto kingPtr = dynamic_cast<King*>(piecePtr.get()))
+        {
+            /// Verifică pentru fiecare rege dacă este în șah
+            if (isKingInCheck(*kingPtr))
+            {
+                if (kingPtr->getColor() == sf::Color::White)
+                        std::cout << "Chess black player!" << std::endl;
+                    else if (kingPtr->getColor() == sf::Color::Black)
+                                std::cout << "Chess white player!" << std::endl;
+
+            }
+            if (isCheckmate(*kingPtr))
+            {
+                ///Mesaj in consola
+                std::cout << "Checkmate\n " << (kingPtr->getColor() == sf::Color::White ? "Black" : "White") << " player wins!" << std::endl;
+            }
+        }
+    }
 }
 
 sf::Vector2f Game::calculateSquareCenter(const sf::Vector2f& mousePosition) const
@@ -299,21 +290,98 @@ sf::Vector2f Game::calculateSquareCenter(const sf::Vector2f& mousePosition) cons
 
     return center;
 
+}
 
+bool Game::isKingInCheck(const King& king) const {
+    for (const auto& piecePtr : pieces) {
+        if (piecePtr->getColor() != king.getColor() &&
+            piecePtr->isValidMove(piecePtr->getPosition(), king.getPosition(), *board)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Game::isSquareOccupied(const sf::Vector2f& position) const {
+    /// Verificați dacă locația este ocupată de oricare dintre piese
+    for (const auto& piecePtr : pieces) {
+        if (piecePtr->getPosition() == position) {
+            return true; /// Locația este ocupată
+        }
+    }
+    return false; /// Locația este liberă
+}
+
+bool Game::isSquareAttacked(const sf::Vector2f& position, sf::Color attackingColor) const {
+    /// Verificați dacă locația este atacată de oricare dintre piesele de culoare opusă
+    for (const auto& piecePtr : pieces) {
+        if (piecePtr->getColor() != attackingColor &&
+            piecePtr->isValidMove(piecePtr->getPosition(), position, *board)) {
+            return true; /// Locația este atacată
+        }
+    }
+    return false; /// Locația nu este atacată
+}
+
+bool Game::isCheckmate(const King& king) const {
+    if (!isKingInCheck(king)) {
+        return false; /// Regele nu este în șah mat dacă nu este în șah
+    }
+
+    const sf::Vector2f kingPos = king.getPosition();
+    /// Coordonatele posibile pentru o mutare a regelui
+    const std::vector<sf::Vector2f> possibleMoves =
+            {
+                    {kingPos.x + 1, kingPos.y},
+                    {kingPos.x - 1, kingPos.y},
+                    {kingPos.x, kingPos.y + 1},
+                    {kingPos.x, kingPos.y - 1},
+                    {kingPos.x + 1, kingPos.y + 1},
+                    {kingPos.x - 1, kingPos.y - 1},
+                    {kingPos.x + 1, kingPos.y - 1},
+                    {kingPos.x - 1, kingPos.y + 1}
+            };
+
+    /// Verificați fiecare mutare posibilă
+    for (const auto& move : possibleMoves) {
+        /// Verificați dacă locația este liberă sau atacată
+        if (!isSquareOccupied(move) && !isSquareAttacked(kingPos, king.getColor()))
+        {
+            return false; /// Regele poate face cel puțin o mutare legală pentru a ieși din șah
+        }
+    }
+
+    return true; /// Regele nu poate face nicio mutare legală, deci este șah mat
 }
 
 
 void Game::run() {
-    while (window.isOpen()) {
+    while (window.isOpen() && !gameOver) {
         handleEvents();
         window.clear();
         board->draw(window);
-        for (const auto& piecePtr : pieces) {
+        for (const auto &piecePtr: pieces) {
             piecePtr->draw(window);
         }
         window.display();
+
+        /// Verificați dacă jocul este în șah mat după fiecare iterație
+        for (const auto &piecePtr: pieces)
+        {
+            if (auto kingPtr = dynamic_cast<King *>(piecePtr.get()))
+            {
+                if (isCheckmate(*kingPtr))
+                {
+                    /// Jocul este în șah mat
+                    gameOver = true;
+                    /// Așteptați o scurtă pauză înainte de a închide fereastra
+                    sf::sleep(sf::seconds(3.0f));
+                }
+            }
+        }
     }
 }
+
 
 std::ostream& operator<<(std::ostream& os, const Game& game) {
     os << "Chess Game Information" << std::endl;

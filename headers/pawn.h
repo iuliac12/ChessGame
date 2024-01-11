@@ -8,7 +8,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "piece.h"
+#include "../headers/piece.h"
+
 
 /**
  * @class Pawn
@@ -26,7 +27,7 @@ public:
      * @param color Culorea piesei Pawn (Albă sau Neagră).
      */
     Pawn(const sf::Texture& texture, const sf::Vector2f& position, float width, float height, Color color);
-
+    Pawn();
     /**
      * @brief Constructor de conversie pentru clasa Pawn.
      * @param other Obiectul Piece care va fi convertit la Pawn.
@@ -47,6 +48,7 @@ public:
     * @return True dacă mutarea este validă, false altfel.
     */
     bool isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& newPosition, const Board& board) const override;
+
 };
 
 #endif //OOP_PAWN_H

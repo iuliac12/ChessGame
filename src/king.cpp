@@ -3,6 +3,7 @@
 //
 
 #include "../headers/king.h"
+#include "../headers/board.h"
 
 King::King(const sf::Texture& texture, const sf::Vector2f& position, float width, float height, Color color) :
         Piece(texture, position, width, height, color) {}

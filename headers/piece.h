@@ -35,6 +35,7 @@ protected:
     bool isSelected; /// Indicator dacă piesa este selectată sau nu.
     float width; /// Lățimea piesei.
     float height; /// Înălțimea piesei.
+    bool hasMovedFlag = false;
 
 public:
     /**
@@ -117,6 +118,7 @@ public:
      * @return O referință la fluxul de ieșire.
      */
     friend std::ostream& operator<<(std::ostream& os, const Piece& piece);
+
 };
 
 

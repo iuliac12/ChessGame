@@ -5,6 +5,7 @@
 #include "../headers/pawn.h"
 
 
+Pawn::Pawn() : Piece(sf::Texture(), sf::Vector2f(0.0f, 0.0f), 0.0f, 0.0f, Color::white) {}
 Pawn::Pawn(const sf::Texture& texture, const sf::Vector2f& position, float width, float height, Color color) :
         Piece(texture, position, width, height, color) {}
 
@@ -15,8 +16,10 @@ Pawn* Pawn::clone() const {
 }
 
 bool Pawn::isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& newPosition, const Board& board) const {
-    std::cout<< "Poz initiala: " << initialPosition.x << " " << initialPosition.y << "\n";
+
+    /**std::cout<< "Poz initiala: " << initialPosition.x << " " << initialPosition.y << "\n";
     std::cout<< "Poz finala: " << newPosition.x << " " << newPosition.y << "\n";
+    */
 
     /// Verificați dacă poziția nouă este în interiorul tablei
     if (newPosition.x < 0 || newPosition.x >= static_cast<float>(board.getSquareSize() * 8) ||
@@ -28,13 +31,10 @@ bool Pawn::isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& 
     float deltaX = newPosition.x - initialPosition.x;
     float deltaY = newPosition.y - initialPosition.y;
 
-    std::cout << "deltax si delta y: " << deltaX << " " << deltaY << "\n";
-
     /// Obțineți direcția piesei în funcție de culoarea ei
     int direction = (getColor() == sf::Color::White) ? -1 : 1;
 
-    std::cout<< "direction: " << direction << "\n";
-    std::cout<< "square size: " << board.getSquareSize() << "\n";
+    ///std::cout<< "direction: " << direction << "\n";
 
     /// Verificați dacă  este o mutare validă pentru un pion
     if (deltaX == 0 && deltaY == static_cast<float>(direction) * static_cast<float>(board.getSquareSize()))
@@ -47,13 +47,7 @@ bool Pawn::isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f& 
                deltaX == 0 && deltaY == 2 * static_cast<float>(direction) * static_cast<float>(board.getSquareSize()))
     {
         /// Mutare cu două celule înainte, doar din poziția inițială
-        float midX = initialPosition.x;
-        float midY = initialPosition.y + static_cast<float>(direction) * static_cast<float>(board.getSquareSize());
-        /*
-        if (board.isCellOccupied(midY / board.getSquareSize(), midX / board.getSquareSize())) {
-            return false;  // Returnează false dacă casuța intermediară este ocupată
-        }
-         */
+        return true;
     }
     else if (direction == 1 && initialPosition.y > static_cast<float>(board.getSquareSize()) &&
              initialPosition.y < 2 * static_cast<float>(board.getSquareSize()) &&

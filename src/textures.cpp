@@ -3,6 +3,11 @@
 //
 
 #include "../headers/textures.h"
+#include "../headers/pawn.h"
+#include "../headers/knight.h"
+#include "../headers/textures.h"
+#include "../headers/textures.h"
+
 #include <SFML/Graphics.hpp>
 
 sf::Texture Textures::whitePawn;
@@ -51,3 +56,5 @@ std::ostream& operator<<(std::ostream& os, const Textures&) {
     os << "Textures information" << std::endl;
     return os;
 }
+
+

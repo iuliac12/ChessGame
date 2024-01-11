@@ -41,17 +41,6 @@ bool Bishop::isValidMove(const sf::Vector2f& initialPosition, const sf::Vector2f
             checkPosition.x += static_cast<float>(stepX);
             checkPosition.y += static_cast<float>(stepY);
 
-            /**
-            sf::Vector2i gridPosition(static_cast<int>(checkPosition.x / board.getSquareSize()),
-                                      static_cast<int>(checkPosition.y / board.getSquareSize()));
-
-            if (board.getPieceAt(gridPosition.x, gridPosition.y) != nullptr)
-            {
-                // Există o piesă pe traseu, mutarea nu este validă
-                return false;
-            }
-             */
-
         }
 
         /// Nu există piese pe traseu, mutarea este validă

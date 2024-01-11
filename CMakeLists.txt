@@ -130,7 +130,11 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/piece.h
         headers/queen.h
         headers/rook.h
-        headers/textures.h)
+        headers/textures.h
+        headers/PieceFactory.h
+        headers/PieceFactory.h
+        src/PieceFactory.cpp
+)
 
 ###############################################################################
 

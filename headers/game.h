@@ -20,6 +20,7 @@
  * @brief Reprezintă starea și logica jocului de șah.
  */
 
+class King;
 class Game {
 private:
     sf::RenderWindow window; ///< Fereastra de afișare a jocului.
@@ -29,7 +30,6 @@ private:
     static constexpr float pieceWidth = 60.0f; ///< Lățimea unei piese de șah.
     static constexpr float pieceHeight = 60.0f; ///< Înălțimea unei piese de șah.
     sf::Vector2f initialPiecePos; ///< Poziția inițială a piesei selectate.
-
 
 public:
     /**
@@ -123,6 +123,32 @@ private:
      */
     sf::Vector2f calculateSquareCenter(const sf::Vector2f& mousePosition) const;
 
-};
+    /**
+    * @brief Verifică dacă regele este în șah.
+    * @param king Referință la obiectul King care reprezintă regele.
+     * @return True dacă regele este în șah, false în caz contrar.
+    */
+    bool isKingInCheck(const King& king) const;
+    /**
+    * @brief Verifică dacă este șah mat.
+    * @param king Referință la obiectul King care reprezintă regele.
+    * @return True dacă este șah mat, false în caz contrar.
+    */
+    bool isCheckmate(const King& king) const;
+    /**
+    * @brief Verifică dacă o poziție de pe tablă este ocupată.
+    * @param position Poziția pentru care se face verificarea.
+    * @return True dacă poziția este ocupată, false altfel.
+    */
+    bool isSquareOccupied(const sf::Vector2f& position) const;
+    /**
+    * @brief Verifică dacă o pătrățică de pe tablă este atacată de o piesă de o anumită culoare.
+    * @param position Poziția pătrățelei pentru care se face verificarea.
+    * @param attackingColor Culoarea piesei care poate ataca pătrățica.
+    * @return True dacă pătrățica este atacată, false altfel.
+    */
+    bool isSquareAttacked(const sf::Vector2f& position, sf::Color attackingColor) const;
+
+    };
 
 #endif //OOP_GAME_H
