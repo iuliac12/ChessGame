@@ -21,7 +21,7 @@ Game::Game() : window(sf::VideoMode(596, 596), "Chess Game") {
     addPiecesToVector();
 }
 
-
+/**
 Game::Game(const Game &other)
 {
     board = new Board(*other.board);
@@ -29,6 +29,7 @@ Game::Game(const Game &other)
     for (const auto& piece : other.pieces)
         pieces.push_back(std::unique_ptr<Piece>(piece->clone()));
 }
+*/
 
 Game& Game::operator=(const Game& other)
 {

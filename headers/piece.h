@@ -32,10 +32,10 @@ private:
 
 
 protected:
-    bool isSelected; /// Indicator dacă piesa este selectată sau nu.
     float width; /// Lățimea piesei.
     float height; /// Înălțimea piesei.
-    bool hasMovedFlag = false;
+    bool isSelected;
+
 
 public:
     /**
