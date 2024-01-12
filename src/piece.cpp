@@ -5,7 +5,7 @@
 #include "../headers/piece.h"
 
 Piece::Piece(const sf::Texture& texture, const sf::Vector2f& position, float width, float height, Color color) :
-        sprite(texture), position(position), isSelected(false), width(width), height(height), pieceColor(color) {
+        width(width), height(height), pieceColor(color), sprite(texture), position(position), isSelected(false) {
     sprite.setPosition(position);
 }
 

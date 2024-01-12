@@ -342,7 +342,7 @@ bool Game::isCheckmate(const King& king) const {
                     {kingPos.x + 1, kingPos.y - 1},
                     {kingPos.x - 1, kingPos.y + 1}
             };
-
+    
     /// Verificați fiecare mutare posibilă
     for (const auto& move : possibleMoves) {
         /// Verificați dacă locația este liberă sau atacată

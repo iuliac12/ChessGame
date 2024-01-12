@@ -3,10 +3,7 @@
 //
 
 #include "../headers/textures.h"
-#include "../headers/pawn.h"
-#include "../headers/knight.h"
-#include "../headers/textures.h"
-#include "../headers/textures.h"
+
 
 #include <SFML/Graphics.hpp>
 
